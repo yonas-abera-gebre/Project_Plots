@@ -10,6 +10,7 @@ import mpmath as mp
 from scipy.signal import find_peaks
 from math import floor, ceil
 import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 import sys
 
 def GBF(n,a,b):
@@ -106,13 +107,69 @@ def PEM_Data_Plotter(PEM_data, X_lim = (-2,2,80), Y_lim = (-2,2,80), Z_lim = (-2
         surface_count=17, # needs to be a large number for good volume rendering
         ))
     fig.show()
+
+def PEM_Data_Plotter_Multiple(PEM_data_list, X_lim = (-2,2,80), Y_lim = (-2,2,80), Z_lim = (-2,2,80)):
+    fig = make_subplots(
+    rows=2, cols=2,
+    specs=[[{'type': 'volume'}, {'type': 'volume'}],
+           [{'type': 'volume'}, {'type': 'volume'}]])
+
+    X, Y, Z = np.mgrid[X_lim[0]:X_lim[1]:X_lim[2]*1.0j, Y_lim[0]:Y_lim[1]:Y_lim[2]*1.0j, Z_lim[0]:Z_lim[1]:Z_lim[2]*1.0j]
+    
+    fig.add_trace(go.Volume(
+        x=X.flatten(),
+        y=Y.flatten(),
+        z=Z.flatten(),
+        value=PEM_data_list[0].flatten(),
+        isomin=0.0,
+        isomax=1.0,
+        opacity=0.1, # needs to be small to see through all surfaces
+        surface_count=17, # needs to be a large number for good volume rendering
+        ), row=1, col=1)
+    fig.add_trace(go.Volume(
+        x=X.flatten(),
+        y=Y.flatten(),
+        z=Z.flatten(),
+        value=PEM_data_list[0].flatten(),
+        isomin=0.0,
+        isomax=1.0,
+        opacity=0.1, # needs to be small to see through all surfaces
+        surface_count=17, # needs to be a large number for good volume rendering
+        ), row=1, col=2)
+    fig.add_trace(go.Volume(
+        x=X.flatten(),
+        y=Y.flatten(),
+        z=Z.flatten(),
+        value=PEM_data_list[0].flatten(),
+        isomin=0.0,
+        isomax=1.0,
+        opacity=0.1, # needs to be small to see through all surfaces
+        surface_count=17, # needs to be a large number for good volume rendering
+        ), row=2, col=1)
+    fig.add_trace(go.Volume(
+        x=X.flatten(),
+        y=Y.flatten(),
+        z=Z.flatten(),
+        value=PEM_data_list[0].flatten(),
+        isomin=0.0,
+        isomax=1.0,
+        opacity=0.1, # needs to be small to see through all surfaces
+        surface_count=17, # needs to be a large number for good volume rendering
+        ), row=2, col=2)
+  
+    
+    # fig.update_traces(x=X.flatten(), y=Y.flatten(), z=Z.flatten(), value=values.flatten(),isomin=0.15, isomax=0.9, opacity=0.1, surface_count=15)
+    fig.show()
     
 if __name__=="__main__":
     
     
     file_name = sys.argv[1]
     PEM_data = File_Name_To_Data(file_name)
-    PEM_Data_Plotter(PEM_data)
+    # PEM_Data_Plotter(PEM_data)
+    PEM_data_list = [PEM_data, PEM_data]
+    
+    PEM_Data_Plotter_Multiple(PEM_data_list, X_lim = (-2,2,80), Y_lim = (-2,2,80), Z_lim = (-2,2,80))
     exit()
     
     intensity = 3.51e16
