@@ -90,6 +90,7 @@ if __name__=="__main__":
     file_name = sys.argv[1]
     print(file_name)
     exit()
+    
     loaded_arr = np.loadtxt(file_name)
     load_original_arr = loaded_arr.reshape(loaded_arr.shape[0], loaded_arr.shape[1] // arr.shape[2], arr.shape[2])
     
