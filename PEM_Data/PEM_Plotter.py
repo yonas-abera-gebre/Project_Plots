@@ -76,35 +76,43 @@ def GBF_Zeros2(k_array, quiver_energy, quiver_radius, Ip, omega):
     
     return BF_array
 
-    
-if __name__=="__main__":
-    
 
-    X, Y, Z = np.mgrid[-2:2:80j, -2:2:80j, -2:2:80j]
+def File_Name_To_Data(file_name, X_lim = (-2,2,80), Y_lim = (-2,2,80), Z_lim = (-2,2,80)):
     
-    x_momentum = np.linspace(-2.0 , 2.0, 80)
-    y_momentum = np.linspace(-2.0 , 2.0, 80)
-    z_momentum = np.linspace(-2.0 , 2.0, 80)
+    x_momentum = np.linspace(X_lim[0],X_lim[1], X_lim[2])
+    y_momentum = np.linspace(Y_lim[0],Y_lim[1], Y_lim[2])
+    z_momentum = np.linspace(Z_lim[0],Z_lim[1], Z_lim[2])
     arr = np.zeros((z_momentum.size,y_momentum.size, x_momentum.size))
     
-    file_name = sys.argv[1]
     
     loaded_arr = np.loadtxt(file_name)
-    load_original_arr = loaded_arr.reshape(loaded_arr.shape[0], loaded_arr.shape[1] // arr.shape[2], arr.shape[2])
+    PEM_data = loaded_arr.reshape(loaded_arr.shape[0], loaded_arr.shape[1] // arr.shape[2], arr.shape[2])
     
+    return  PEM_data
+
+def PEM_Data_Plotter(PEM_data, X_lim = (-2,2,80), Y_lim = (-2,2,80), Z_lim = (-2,2,80)):
+    
+    X, Y, Z = np.mgrid[X_lim[0]:X_lim[1]:X_lim[2]*1.0j, Y_lim[0]:Y_lim[1]:Y_lim[2]*1.0j, Z_lim[0]:Z_lim[1]:Z_lim[2]*1.0j]
+
 
     fig = go.Figure(data=go.Volume(
         x=X.flatten(),
         y=Y.flatten(),
         z=Z.flatten(),
-        value=load_original_arr.flatten(),
+        value=PEM_data.flatten(),
         isomin=0.0,
         isomax=1.0,
         opacity=0.1, # needs to be small to see through all surfaces
         surface_count=17, # needs to be a large number for good volume rendering
         ))
     fig.show()
-   
+    
+if __name__=="__main__":
+    
+    
+    file_name = sys.argv[1]
+    PEM_data = File_Name_To_Data(file_name)
+    PEM_Data_Plotter(PEM_data)
     exit()
     
     intensity = 3.51e16
