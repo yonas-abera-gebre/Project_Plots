@@ -141,13 +141,20 @@ def PEM_Data_Plotter_Multiple(PEM_data_list, X_lim = (-2,2,80), Y_lim = (-2,2,80
     
 if __name__=="__main__":
     
+    if len(sys.argv) == 2:
+        file_name = sys.argv[1]
+        PEM_data = File_Name_To_Data(file_name)
+        PEM_Data_Plotter(PEM_data)
+    if len(sys.argv) == 3:
+        file_name_1 = sys.argv[1]
+        PEM_data_1 = File_Name_To_Data(file_name_1)
+        file_name_2 = sys.argv[2]
+        PEM_data_2 = File_Name_To_Data(file_name_2)
+        
+        PEM_data_list = [PEM_data_1, PEM_data_2]
     
-    file_name = sys.argv[1]
-    PEM_data = File_Name_To_Data(file_name)
-    # PEM_Data_Plotter(PEM_data)
-    PEM_data_list = [PEM_data, PEM_data]
+        PEM_Data_Plotter_Multiple(PEM_data_list, X_lim = (-2,2,80), Y_lim = (-2,2,80), Z_lim = (-2,2,80))
     
-    PEM_Data_Plotter_Multiple(PEM_data_list, X_lim = (-2,2,80), Y_lim = (-2,2,80), Z_lim = (-2,2,80))
     exit()
     
     intensity = 3.51e16
