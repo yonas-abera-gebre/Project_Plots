@@ -71,7 +71,7 @@ def PAD_2D(quiver_energy, quiver_radius, omega, polarization):
     z_momentum = np.linspace(-2.0 , 2.0, 80)
 
     
-    pad_value = np.zeros((z_momentum.size,x_momentum.size))
+    # pad_value = np.zeros((z_momentum.size,x_momentum.size))
     pad_value_save = np.zeros((z_momentum.size,y_momentum.size, x_momentum.size))
      
     for i, kx in enumerate(x_momentum):
@@ -91,26 +91,26 @@ def PAD_2D(quiver_energy, quiver_radius, omega, polarization):
 
                 pad_value_save[i,j,l] = k*pow(GBF(N, np.dot(quiver_vector, k_vector), quiver_energy/(2*omega)),2)*pow(quiver_energy - N*omega ,2)*pow(np.cos(np.dot(k_vector, mole_orientation)), 2)
                 
-            pad_value[j, i] += pad_value_temp
+            # pad_value[j, i] += pad_value_temp
     
     pad_value_save = pad_value_save / pad_value_save.max() 
     arr_reshaped = pad_value_save.reshape(pad_value_save.shape[0], -1)
-    np.savetxt("Ana_Z_B_One_Photon3.txt", arr_reshaped)
+    np.savetxt("Ana_Z_B_Two_Photon.txt", arr_reshaped)
     
     exit()
     
-    pad_value = pad_value / pad_value.max()
-    pos = plt.imshow(pad_value, extent=[-2.0, 2.0, -2.0, 2.0])#, norm=LogNorm(vmin=1e-3, vmax=1))
-    plt.colorbar(pos)
-    plt.savefig("FIG_Z_XZ_AB.png")
+    # pad_value = pad_value / pad_value.max()
+    # pos = plt.imshow(pad_value, extent=[-2.0, 2.0, -2.0, 2.0])#, norm=LogNorm(vmin=1e-3, vmax=1))
+    # plt.colorbar(pos)
+    # plt.savefig("FIG_Z_XZ_AB.png")
     
 if __name__=="__main__":
     
     polarization = np.array([0,0,1])
     ellipticity = 0.
     ellipticity_vector = np.array([0,1,0])
-    intensity = 3.51e13
-    omega = 1.5
+    intensity = 3.51e14
+    omega = 0.75
     Ip = 1.0
     quiver_radius, quiver_energy = Calculate_Parameters(intensity, omega)
     PAD_2D(quiver_energy, quiver_radius, omega, polarization)
