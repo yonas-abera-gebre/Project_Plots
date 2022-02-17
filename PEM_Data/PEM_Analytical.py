@@ -109,7 +109,7 @@ if __name__=="__main__":
     polarization = np.array([0,0,1])
     ellipticity = 0.
     ellipticity_vector = np.array([0,1,0])
-    intensity = 3.51e16
+    intensity = 3.51e14
     omega = 1.5
     Ip = 1.0
     quiver_radius, quiver_energy = Calculate_Parameters(intensity, omega)
