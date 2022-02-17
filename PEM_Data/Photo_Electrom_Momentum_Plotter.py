@@ -92,7 +92,7 @@ def PEM_Data_Plotter_Multiple(PEM_data_list, X_lim = (-2,2,80), Y_lim = (-2,2,80
         x=X.flatten(),
         y=Y.flatten(),
         z=Z.flatten(),
-        value=PEM_data_list[0].flatten(),
+        value=PEM_data_list[1].flatten(),
         isomin=0.0,
         isomax=1.0,
         opacity=0.1, # needs to be small to see through all surfaces
@@ -116,5 +116,6 @@ if __name__=="__main__":
         PEM_data_2 = File_Name_To_Data(file_name_2)
         
         PEM_data_list = [PEM_data_1, PEM_data_2]
-    
+
+        print(file_name_1, file_name_2)
         PEM_Data_Plotter_Multiple(PEM_data_list, X_lim = (-2,2,80), Y_lim = (-2,2,80), Z_lim = (-2,2,80))
