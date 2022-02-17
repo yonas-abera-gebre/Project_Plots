@@ -102,14 +102,14 @@ def PAD_2D(quiver_energy, quiver_radius, omega, polarization):
     pad_value = pad_value / pad_value.max()
     pos = plt.imshow(pad_value, extent=[-2.0, 2.0, -2.0, 2.0])#, norm=LogNorm(vmin=1e-3, vmax=1))
     plt.colorbar(pos)
-    plt.savefig("FIG_Z_XZ_AB.png")
+    plt.savefig("FIG_Z_XZ_AB2.png")
     
 if __name__=="__main__":
     
     polarization = np.array([0,0,1])
     ellipticity = 0.
     ellipticity_vector = np.array([0,1,0])
-    intensity = 3.51e14
+    intensity = 3.51e16
     omega = 1.5
     Ip = 1.0
     quiver_radius, quiver_energy = Calculate_Parameters(intensity, omega)
