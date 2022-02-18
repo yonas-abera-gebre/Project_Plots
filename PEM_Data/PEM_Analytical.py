@@ -72,7 +72,7 @@ def PAD_2D(quiver_energy, quiver_radius, omega, polarization):
 
     
     pad_value = np.zeros((z_momentum.size,x_momentum.size))
-    # pad_value_save = np.zeros((z_momentum.size,y_momentum.size, x_momentum.size))
+    pad_value_save = np.zeros((z_momentum.size,y_momentum.size, x_momentum.size))
      
     for i, kx in enumerate(x_momentum):
         print(round(kx,3))
@@ -95,7 +95,7 @@ def PAD_2D(quiver_energy, quiver_radius, omega, polarization):
     
     # pad_value_save = pad_value_save / pad_value_save.max() 
     # arr_reshaped = pad_value_save.reshape(pad_value_save.shape[0], -1)
-    # np.savetxt("Ana_Z_B_Two_Photon4.txt", arr_reshaped)
+    # np.savetxt("Ana_X_AB_One_Photon.txt", arr_reshaped)
     
     # exit()
     
@@ -106,12 +106,12 @@ def PAD_2D(quiver_energy, quiver_radius, omega, polarization):
     
 if __name__=="__main__":
     
-    polarization = np.array([0,0,1])
+    polarization = np.array([1,0,0])
     ellipticity = 0.
     ellipticity_vector = np.array([0,1,0])
     intensity = 1e14
-    omega = 1.5
-    Ip = 1.0
+    omega = 1.
+    Ip = 1.5
     quiver_radius, quiver_energy = Calculate_Parameters(intensity, omega)
     PAD_2D(quiver_energy, quiver_radius, omega, polarization)
     
