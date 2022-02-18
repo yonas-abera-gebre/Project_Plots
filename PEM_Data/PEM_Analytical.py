@@ -66,9 +66,9 @@ def GBF_Zeros(k_array, quiver_energy, quiver_radius, Ip, omega):
 def PAD_2D(quiver_energy, quiver_radius, omega, polarization):
 
 
-    x_momentum = np.linspace(-2.0 , 2.0, 80)
-    y_momentum = np.linspace(-2.0 , 2.0, 80)
-    z_momentum = np.linspace(-2.0 , 2.0, 80)
+    x_momentum = np.linspace(-2.0 , 2.0, 40)
+    y_momentum = np.linspace(-2.0 , 2.0, 40)
+    z_momentum = np.linspace(-2.0 , 2.0, 40)
 
     
     pad_value = np.zeros((z_momentum.size,x_momentum.size))
@@ -76,9 +76,9 @@ def PAD_2D(quiver_energy, quiver_radius, omega, polarization):
      
     for i, kx in enumerate(x_momentum):
         print(round(kx,3))
-        for j, ky in enumerate(y_momentum):
+        for j, kz in enumerate(z_momentum):
             pad_value_temp = 0.0
-            for l, kz in enumerate(z_momentum):
+            for l, ky in enumerate(y_momentum):
                 
                 k = np.sqrt(kx*kx + ky*ky + kz*kz)
                 N = Calculate_NPA(k, quiver_energy, Ip, omega)
@@ -89,15 +89,15 @@ def PAD_2D(quiver_energy, quiver_radius, omega, polarization):
                 
                 pad_value_temp += k*pow(GBF(N, np.dot(quiver_vector, k_vector), quiver_energy/(2*omega)),2)*pow(quiver_energy - N*omega ,2)*pow(np.sin(np.dot(k_vector, mole_orientation)), 2)
 
-                pad_value_save[i,j,l] = k*pow(GBF(N, np.dot(quiver_vector, k_vector), quiver_energy/(2*omega)),2)*pow(quiver_energy - N*omega ,2)*pow(np.sin(np.dot(k_vector, mole_orientation)), 2)
+                # pad_value_save[i,j,l] = k*pow(GBF(N, np.dot(quiver_vector, k_vector), quiver_energy/(2*omega)),2)*pow(quiver_energy - N*omega ,2)*pow(np.sin(np.dot(k_vector, mole_orientation)), 2)
                 
             pad_value[j, i] += pad_value_temp
     
-    pad_value_save = pad_value_save / pad_value_save.max() 
-    arr_reshaped = pad_value_save.reshape(pad_value_save.shape[0], -1)
-    np.savetxt("Ana_X_AB_One_Photon.txt", arr_reshaped)
+    # pad_value_save = pad_value_save / pad_value_save.max() 
+    # arr_reshaped = pad_value_save.reshape(pad_value_save.shape[0], -1)
+    # np.savetxt("Ana_X_AB_One_Photon.txt", arr_reshaped)
     
-    exit()
+    # exit()
     
     pad_value = pad_value / pad_value.max()
     pos = plt.imshow(pad_value, extent=[-2.0, 2.0, -2.0, 2.0])#, norm=LogNorm(vmin=1e-3, vmax=1))
@@ -109,9 +109,9 @@ if __name__=="__main__":
     polarization = np.array([1,0,0])
     ellipticity = 0.
     ellipticity_vector = np.array([0,1,0])
-    intensity = 1e14
+    intensity = 1e13
     omega = 1.5
-    Ip = 1.0
+    Ip = 2.0
     quiver_radius, quiver_energy = Calculate_Parameters(intensity, omega)
     PAD_2D(quiver_energy, quiver_radius, omega, polarization)
     
