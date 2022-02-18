@@ -89,7 +89,7 @@ def PAD_2D(quiver_energy, quiver_radius, omega, polarization):
                 
                 pad_value_temp += k*pow(GBF(N, np.dot(quiver_vector, k_vector), quiver_energy/(2*omega)),2)*pow(quiver_energy - N*omega ,2)*pow(np.sin(np.dot(k_vector, mole_orientation)), 2)
 
-                pad_value_save[i,j,l] = k*pow(GBF(N, np.dot(quiver_vector, k_vector), quiver_energy/(2*omega)),2)*pow(quiver_energy - N*omega ,2)*pow(np.cos(np.dot(k_vector, mole_orientation)), 2)
+                pad_value_save[i,j,l] = k*pow(GBF(N, np.dot(quiver_vector, k_vector), quiver_energy/(2*omega)),2)*pow(quiver_energy - N*omega ,2)*pow(np.sin(np.dot(k_vector, mole_orientation)), 2)
                 
             pad_value[j, i] += pad_value_temp
     
