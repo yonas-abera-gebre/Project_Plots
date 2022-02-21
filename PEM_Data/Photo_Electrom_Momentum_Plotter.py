@@ -69,6 +69,7 @@ def PEM_Data_Plotter(PEM_data, X_lim = (-2,2,80), Y_lim = (-2,2,80), Z_lim = (-2
         opacity=0.1, # needs to be small to see through all surfaces
         surface_count=17, # needs to be a large number for good volume rendering
         ))
+    fig.update_layout(height=600, width=600)
     fig.show()
 
 def PEM_Data_Plotter_Multiple(PEM_data_list, X_lim = (-2,2,80), Y_lim = (-2,2,80), Z_lim = (-2,2,80)):
