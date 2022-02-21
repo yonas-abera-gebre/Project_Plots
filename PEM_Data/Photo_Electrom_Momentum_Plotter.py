@@ -138,7 +138,7 @@ def PEM_Data_Plotter_Four(PEM_data_list, X_lim = (-2,2,80), Y_lim = (-2,2,80), Z
         opacity=0.1, # needs to be small to see through all surfaces
         surface_count=17, # needs to be a large number for good volume rendering
         ), row=2, col=1)
-     fig.add_trace(go.Volume(
+    fig.add_trace(go.Volume(
         x=X.flatten(),
         y=Y.flatten(),
         z=Z.flatten(),
