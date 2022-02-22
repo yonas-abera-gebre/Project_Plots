@@ -19,8 +19,7 @@ def PAD_Momentum(l_m_list):
     for i, px in enumerate(x_momentum):
         print(round(px,3))
         for j, py in enumerate(y_momentum):
-            pad_value_temp = 0.0
-
+        
             for l, pz in enumerate(z_momentum):
 
                 k = np.sqrt(px*px + py*py + pz*pz)
@@ -48,9 +47,10 @@ def PAD_Momentum(l_m_list):
 
                 theta = np.arccos(pz/k)
                
+                out_going_wave = 0.0
                 for l_m in l_m_list:
                     l, m  = l_m[0], l_m[1]
-                    out_going_wave = sph_harm(m, l, phi, theta)
+                    out_going_wave += sph_harm(m, l, phi, theta)
 
                 pad_value_save[i,j,l] = out_going_wave
 
@@ -62,5 +62,5 @@ def PAD_Momentum(l_m_list):
 
 if __name__=="__main__":
     
-    l_m_list = [[0,0]]
+    l_m_list = [[1,0]]
     PAD_Momentum(l_m_list)
