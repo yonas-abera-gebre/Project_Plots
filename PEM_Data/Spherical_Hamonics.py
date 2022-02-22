@@ -50,7 +50,7 @@ def PAD_Momentum(l_m_list):
                 out_going_wave = 0.0
                 for l_m in l_m_list:
                     l, m  = l_m[0], l_m[1]
-                    out_going_wave += sph_harm(m, l, phi, theta)
+                    out_going_wave += np.abs(sph_harm(m, l, phi, theta))
 
                 pad_value_save[i,j,l] = out_going_wave
 
