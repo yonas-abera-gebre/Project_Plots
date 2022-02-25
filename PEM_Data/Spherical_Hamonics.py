@@ -1,123 +1,76 @@
-if True:
-    import sys
-    import json 
-    import matplotlib
-    import matplotlib.pyplot as plt
-    matplotlib.use('Agg')
-    from matplotlib.colors import LogNorm
-    from numpy import sin, log, pi, angle, sqrt
-    import numpy as np
-    import mpmath as mp
-    from math import floor
-    from scipy.special import sph_harm
-    from scipy import special
- 
+import scipy as sci
+import scipy.special as sp
+import numpy as np
+import matplotlib
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import cm, colors
 
 
-def Cont_State_Calculator(l, k, grid):
-    z = 2
 
-    coulomb_fun = np.zeros(len(grid))
-    for i, r in enumerate(grid):
-        coulomb_fun[i] = mp.coulombf(l, -z/k, k*r)
+def Plot_SH():
+    # Coordinate arrays for the graphical representation
+    x = np.linspace(-np.pi, np.pi, 100)
+    y = np.linspace(-np.pi/2, np.pi/2, 50)
+    X, Y = np.meshgrid(x, y)
 
-    return coulomb_fun
+    # Spherical coordinate arrays derived from x, y
+    # Necessary conversions to get Mollweide right
+    phi = x.copy()    # physical copy
+    phi[x < 0] = 2 * np.pi + x[x<0]
+    theta = np.pi/2 - y
+    PHI, THETA = np.meshgrid(phi, theta)
 
-def Index_Map(l_max, m_max):
-    block_to_qn = {}
-    qn_to_block = {}
-    block = 0
+    l = 2
+    m = 2
+    SH_SP = sp.sph_harm(m, l, PHI, THETA)
 
-    for m in range(0, m_max + 1):
-            if m > 0:
-                m_minus = -1*m
-                for l in range(abs(m_minus), l_max + 1):
-                    block_to_qn[block] = (l,m_minus)
-                    qn_to_block[(l,m_minus)] = block
-                    block += 1
-                    
-            for l in range(m, l_max + 1):
-                block_to_qn[block] = (l,m)
-                qn_to_block[(l,m)] = block
-                block += 1
-    return  block_to_qn, qn_to_block
-
-
-def closest(lst, k): 
-    return lst[min(range(len(lst)), key = lambda i: abs(float(lst[i])-k))] 
-
-def PAD_Momentum():
-
-    block_to_qn, qn_to_block = Index_Map(5, 0)
-    grid = np.arange(0.5, 10 + 0.5, 0.5)
-    x_momentum = np.linspace(-2.0 , 2.0, 20)
-    y_momentum = np.linspace(-2.0 , 2.0, 20)
-    z_momentum = np.linspace(-2.0 , 2.0, 20)
-  
-
-    pad_value = np.zeros((z_momentum.size,x_momentum.size))
-    pad_value_save = np.zeros((z_momentum.size,y_momentum.size, x_momentum.size))
+    l = 2
+    m = -2
+    SH_SP += sp.sph_harm(m, l, PHI, THETA)
     
-    for i, px in enumerate(x_momentum):
-        print(round(px,3))
-        for j, py in enumerate(y_momentum):
-
-            for l, pz in enumerate(z_momentum):
-
-                k = np.sqrt(px*px + py*py + pz*pz)
-                if k == 0:
-                    continue
-
-                if px > 0 and py > 0:
-                    phi = np.arctan(py/px)
-                elif px > 0 and py < 0:
-                    phi = np.arctan(py/px) + 2*pi
-                elif px < 0 and py > 0:
-                    phi = np.arctan(py/px) + pi
-                elif px < 0 and py < 0:
-                    phi = np.arctan(py/px) + pi
-                elif px == 0 and py == 0:
-                    phi = 0
-                elif px == 0 and py > 0:
-                    phi = pi / 2
-                elif px == 0 and py < 0:
-                    phi = 3*pi / 2
-                elif py == 0 and px > 0:
-                    phi = 0
-                elif py == 0 and px < 0:
-                    phi = pi
-
-                theta = np.arccos(pz/k)
-                
-                
-                theta, phi = np.meshgrid(theta, phi)
-                out_going_wave = np.zeros(phi.shape, dtype=complex)
-                
-                for key in qn_to_block:
-                    l, m  = key[0], key[1]
-                    
-                    CF_Proj = Cont_State_Calculator(l, k, grid)
-                    CF_Psi = Cont_State_Calculator(1, k, grid)
-                    z=2
-                    phase = angle(special.gamma(l + 1 - 1j*z/k))
-                    coef =  np.exp(-1.0j*phase)* np.power(1.0j,l)*np.sum(CF_Proj.conj()*CF_Psi)  
-                    out_going_wave += coef*sph_harm(m, l, phi, theta)
-
-
-                pad_value_save[i,j,l] = np.abs(out_going_wave)**2
-            
-
-
-    pad_value_save = pad_value_save / pad_value_save.max()
-    arr_reshaped = pad_value_save.reshape(pad_value_save.shape[0], -1)
     
-    np.savetxt("PEM.txt", arr_reshaped)
+    l = 2
+    m = 0
+    SH_SP += sp.sph_harm(m, l, PHI, THETA) * 2
     
-    exit()
-    return pad_value, x_momentum, z_momentum
+    # l = 4
+    # m = 2
+    # SH_SP += sp.sph_harm(m, l, PHI, THETA)*0.2
+    
+    # l = 4
+    # m = -2
+    # SH_SP += sp.sph_harm(m, l, PHI, THETA)*0.2
+     
+    # l = 4
+    # m = 0
+    # SH_SP += sp.sph_harm(m, l, PHI, THETA) * 0.5
+    
+    SH_SP = np.abs(SH_SP)
+    
+    matplotlib.rc('text', usetex=True)
+    matplotlib.rcParams['text.latex.preamble']=[r"\usepackage{amsmath}"]
+    
+    xlabels = ['$210^\circ$', '$240^\circ$','$270^\circ$','$300^\circ$','$330^\circ$',
+            '$0^\circ$', '$30^\circ$', '$60^\circ$', '$90^\circ$','$120^\circ$', '$150^\circ$']
 
+    ylabels = ['$165^\circ$', '$150^\circ$', '$135^\circ$', '$120^\circ$', 
+            '$105^\circ$', '$90^\circ$', '$75^\circ$', '$60^\circ$',
+            '$45^\circ$','$30^\circ$','$15^\circ$']
+
+    fig, ax = plt.subplots(subplot_kw=dict(projection='mollweide'), figsize=(10,8))
+    im = ax.pcolormesh(X, Y , SH_SP/np.max(SH_SP), cmap='viridis')
+    ax.set_xticklabels(xlabels, fontsize=14, color='r')
+    ax.set_yticklabels(ylabels, fontsize=14)
+    # ax.set_title('real$(Y^2_ 4)$', fontsize=20)
+    ax.set_xlabel(r'$\boldsymbol \phi$', fontsize=20)
+    ax.set_ylabel(r'$\boldsymbol{\theta}$', fontsize=20)
+    ax.grid()
+    # fig.colorbar(im, orientation='horizontal')
+    # plt.savefig("Two_Photon_Bonding.png")
+    plt.show()
 
 if __name__=="__main__":
 
-    PAD_Momentum()
+    Plot_SH()
 
