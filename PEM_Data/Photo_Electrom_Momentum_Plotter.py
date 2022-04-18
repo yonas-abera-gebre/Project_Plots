@@ -41,7 +41,7 @@ def Calculate_NPA(k, quiver_energy, Ip, omega):
 
 
 #Function for plotting PEM in true 3-Dimension
-def File_Name_To_Data(file_name, X_lim = (-2,2,80), Y_lim = (-2,2,80), Z_lim = (-2,2,80)):
+def File_Name_To_Data(file_name, X_lim = (-2,2,50), Y_lim = (-2,2,50), Z_lim = (-2,2,50)):
     
     x_momentum = np.linspace(X_lim[0],X_lim[1], X_lim[2])
     y_momentum = np.linspace(Y_lim[0],Y_lim[1], Y_lim[2])
@@ -54,7 +54,7 @@ def File_Name_To_Data(file_name, X_lim = (-2,2,80), Y_lim = (-2,2,80), Z_lim = (
     
     return  PEM_data
 
-def PEM_Data_Plotter(PEM_data, X_lim = (-2,2,80), Y_lim = (-2,2,80), Z_lim = (-2,2,80)):
+def PEM_Data_Plotter(PEM_data, X_lim = (-2,2,50), Y_lim = (-2,2,50), Z_lim = (-2,2,50)):
     
     X, Y, Z = np.mgrid[X_lim[0]:X_lim[1]:X_lim[2]*1.0j, Y_lim[0]:Y_lim[1]:Y_lim[2]*1.0j, Z_lim[0]:Z_lim[1]:Z_lim[2]*1.0j]
 
@@ -71,7 +71,7 @@ def PEM_Data_Plotter(PEM_data, X_lim = (-2,2,80), Y_lim = (-2,2,80), Z_lim = (-2
         ))
     fig.show()
 
-def PEM_Data_Plotter_Two(PEM_data_list, X_lim = (-2,2,80), Y_lim = (-2,2,80), Z_lim = (-2,2,80)):
+def PEM_Data_Plotter_Two(PEM_data_list, X_lim = (-2,2,50), Y_lim = (-2,2,50), Z_lim = (-2,2,50)):
     fig = make_subplots(
     rows=1, cols=2,
     specs=[[{'type': 'volume'}, {'type': 'volume'}]])
@@ -101,7 +101,7 @@ def PEM_Data_Plotter_Two(PEM_data_list, X_lim = (-2,2,80), Y_lim = (-2,2,80), Z_
     
     fig.show()
     
-def PEM_Data_Plotter_Four(PEM_data_list, X_lim = (-2,2,80), Y_lim = (-2,2,80), Z_lim = (-2,2,80)):
+def PEM_Data_Plotter_Four(PEM_data_list, X_lim = (-2,2,50), Y_lim = (-2,2,50), Z_lim = (-2,2,50)):
     fig = make_subplots(
     rows=2, cols=2,
     specs=[[{'type': 'volume'}, {'type': 'volume'}], [{'type': 'volume'}, {'type': 'volume'}]])
