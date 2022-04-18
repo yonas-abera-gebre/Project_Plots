@@ -168,7 +168,7 @@ if __name__=="__main__":
         PEM_data_list = [PEM_data_1, PEM_data_2]
 
         print(file_name_1, file_name_2)
-        PEM_Data_Plotter_Two(PEM_data_list, X_lim = (-2,2,80), Y_lim = (-2,2,80), Z_lim = (-2,2,80))
+        PEM_Data_Plotter_Two(PEM_data_list, X_lim = (-2,2,50), Y_lim = (-2,2,50), Z_lim = (-2,2,50))
         
     if len(sys.argv) == 5:
         file_name_1 = sys.argv[1]
@@ -184,4 +184,4 @@ if __name__=="__main__":
         PEM_data_list = [PEM_data_1, PEM_data_2, PEM_data_3, PEM_data_4]
 
         print(file_name_1, file_name_2, file_name_3, file_name_4)
-        PEM_Data_Plotter_Two(PEM_data_list, X_lim = (-2,2,80), Y_lim = (-2,2,80), Z_lim = (-2,2,80))
+        PEM_Data_Plotter_Two(PEM_data_list, X_lim = (-2,2,50), Y_lim = (-2,2,50), Z_lim = (-2,2,50))
