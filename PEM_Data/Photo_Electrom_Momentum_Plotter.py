@@ -41,7 +41,7 @@ def Calculate_NPA(k, quiver_energy, Ip, omega):
 
 
 #Function for plotting PEM in true 3-Dimension
-def File_Name_To_Data(file_name, X_lim = (-2,2,50), Y_lim = (-2,2,50), Z_lim = (-2,2,50)):
+def File_Name_To_Data(file_name, X_lim = (-5,5,50), Y_lim = (-5,5,50), Z_lim = (-5,5,50)):
     
     x_momentum = np.linspace(X_lim[0],X_lim[1], X_lim[2])
     y_momentum = np.linspace(Y_lim[0],Y_lim[1], Y_lim[2])
@@ -54,7 +54,7 @@ def File_Name_To_Data(file_name, X_lim = (-2,2,50), Y_lim = (-2,2,50), Z_lim = (
     
     return  PEM_data
 
-def PEM_Data_Plotter(PEM_data, X_lim = (-2,2,50), Y_lim = (-2,2,50), Z_lim = (-2,2,50)):
+def PEM_Data_Plotter(PEM_data, X_lim = (-5,5,50), Y_lim = (-5,5,50), Z_lim = (-5,5,50)):
     
     X, Y, Z = np.mgrid[X_lim[0]:X_lim[1]:X_lim[2]*1.0j, Y_lim[0]:Y_lim[1]:Y_lim[2]*1.0j, Z_lim[0]:Z_lim[1]:Z_lim[2]*1.0j]
 
